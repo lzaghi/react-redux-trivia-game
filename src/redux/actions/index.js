@@ -3,9 +3,10 @@ export const FETCHING = 'FETCHING';
 export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS';
 export const FETCH_TOKEN_FAIL = 'FETCH_TOKEN_FAIL';
 
-export function userLogin(name) {
+export function userLogin(email, name) {
   return {
     type: USER_LOGIN,
+    email,
     name,
   };
 }

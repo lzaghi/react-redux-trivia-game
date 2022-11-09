@@ -1,4 +1,4 @@
-import { USER_LOGIN } from '../actions';
+import { USER_LOGIN } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
@@ -12,6 +12,7 @@ const player = (state = INITIAL_STATE, action) => {
   case USER_LOGIN:
     return {
       ...state,
+      email: action.email,
       name: action.name,
     };
   default:

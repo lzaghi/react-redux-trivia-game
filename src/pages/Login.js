@@ -29,12 +29,10 @@ class Login extends React.Component {
     });
   }
 
-  getToken = () => {
+  handleClick = () => {
     const { dispatch } = this.props;
-    const { name } = this.state;
-
-    dispatch(userLogin(name));
-
+    const { email, name } = this.state;
+    dispatch(userLogin(email, name));
     dispatch(fetchTokenAPI());
   };
 
@@ -78,7 +76,7 @@ class Login extends React.Component {
             type="button"
             data-testid="btn-play"
             disabled={ !this.validateInputs() }
-            onClick={ this.getToken }
+            onClick={ this.handleClick }
           >
             Jogar
           </button>
