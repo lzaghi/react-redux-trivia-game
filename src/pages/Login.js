@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchTokenAPI, userLogin } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,12 +14,29 @@ class Login extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    const { token, history } = this.props;
+    if (token !== '') {
+      localStorage.setItem('token', token);
+      history.push('/game');
+    }
+  }
+
   handleInput(event) {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
     });
   }
+
+  getToken = () => {
+    const { dispatch } = this.props;
+    const { name } = this.state;
+
+    dispatch(userLogin(name));
+
+    dispatch(fetchTokenAPI());
+  };
 
   validateInputs() {
     const { name, email } = this.state;
@@ -25,6 +45,8 @@ class Login extends React.Component {
 
   render() {
     const { name, email } = this.state;
+    const { isLoading, error } = this.props;
+    if (error) return 'Algo deu errado!';
     return (
       <div>
         <form>
@@ -56,13 +78,35 @@ class Login extends React.Component {
             type="button"
             data-testid="btn-play"
             disabled={ !this.validateInputs() }
+            onClick={ this.getToken }
           >
             Jogar
           </button>
         </form>
+        { isLoading && (<p>Carregando...</p>)}
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isLoading: state.token.isLoading,
+  token: state.token.token,
+  error: state.token.error,
+});
+
+Login.defaultProps = {
+  error: null,
+};
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
+  error: PropTypes.shape(),
+};
+
+export default connect(mapStateToProps)(Login);
