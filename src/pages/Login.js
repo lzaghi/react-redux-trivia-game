@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchTokenAPI, userLogin } from '../redux/actions';
+import SettingsBtn from '../components/SettingsBtn';
 
 class Login extends React.Component {
   constructor() {
@@ -80,6 +81,7 @@ class Login extends React.Component {
           >
             Jogar
           </button>
+          <SettingsBtn />
         </form>
         { isLoading && (<p>Carregando...</p>)}
       </div>

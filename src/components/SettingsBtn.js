@@ -1,36 +1,21 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
-class SettingsBtn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+export default function SettingsBtn() {
+  const history = useHistory();
 
-  handdleClick = () => {
-    const { history } = this.props;
+  function handdleClick() {
     history.push('/settings');
-  };
-
-  render() {
-    return (
-      <button
-        type="button"
-        data-testid="btn-settings"
-        onClick={ this.handdleClick }
-      >
-        Settings
-
-      </button>
-    );
   }
+
+  return (
+    <button
+      type="button"
+      data-testid="btn-settings"
+      onClick={ handdleClick }
+    >
+      Settings
+
+    </button>
+  );
 }
-
-SettingsBtn.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default SettingsBtn;
