@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
@@ -41,8 +42,8 @@ class Game extends Component {
 
   componentDidUpdate() {
     const section = document.getElementById('section');
-    console.log(section.children);
-    if (section.children) {
+    // console.log(section.children);
+    if (section) {
       for (let i = section.children.length; i >= 0; i -= 1) {
         section.appendChild(section.children[Math.floor(Math.random() * i)]);
       }
@@ -51,13 +52,13 @@ class Game extends Component {
 
   render() {
     const { index, questions } = this.state;
+    console.log(questions);
     return (
       <>
         <Header />
 
         {questions.length > 0 ? (
           <div>
-
             <p data-testid="question-text">{questions[index].question}</p>
             <p data-testid="question-category">{questions[index].category}</p>
             {questions[index].type === 'boolean' ? (
@@ -93,6 +94,14 @@ class Game extends Component {
     );
   }
 }
+
+Game.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  responseCode: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
+};
 const mapStateToProps = (state) => ({
   isLoading: state.token.isLoading,
   token: state.token.token,
