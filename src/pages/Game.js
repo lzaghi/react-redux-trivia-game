@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-const mock = [
-  {
-    category: 'Entertainment: Video Games',
-    type: 'boolean',
-    difficulty: 'hard',
-    question: 'TF2: Sentry rocket damage falloff is calculated based on the distance between the sentry and the enemy, not the engineer and the enemy',
-    correct_answer: 'False',
-    incorrect_answers: [
-      'True',
-    ],
-  },
-];
+// const mock = [
+//   {
+//     category: 'Entertainment: Video Games',
+//     type: 'boolean',
+//     difficulty: 'hard',
+//     question: 'TF2: Sentry rocket damage falloff is calculated based on the distance between the sentry and the enemy, not the engineer and the enemy',
+//     correct_answer: 'False',
+//     incorrect_answers: [
+//       'True',
+//     ],
+//   },
+// ];
 
 class Game extends Component {
   state = {
@@ -27,12 +27,11 @@ class Game extends Component {
     const NUMBER_QUESTIONS = 5;
     if (responseCode === RESPONSE_CODE) {
       localStorage.removeItem('token');
-      history.push('/login');
+      history.push('/');
     } else {
       const URL = `https://opentdb.com/api.php?amount=${NUMBER_QUESTIONS}&token=${token}`;
       const request = await fetch(URL);
       const response = await request.json();
-      console.log(response);
 
       this.setState({
         questions: response.results,
@@ -40,43 +39,56 @@ class Game extends Component {
     }
   }
 
-  /* componentDidUpdate() {
-    const section = document.querySelector('section');
-    console.log(section);
-    for (let i = section.children.length; i >= 0; i++ ) {
-      section.appendChild(section.children[Math.random() * i || 0]);
+  componentDidUpdate() {
+    const section = document.getElementById('section');
+    console.log(section.children);
+    if (section.children) {
+      for (let i = section.children.length; i >= 0; i -= 1) {
+        section.appendChild(section.children[Math.floor(Math.random() * i)]);
+      }
     }
-  } */
+  }
 
   render() {
     const { index, questions } = this.state;
-    console.log(questions);
     return (
       <>
         <Header />
 
-        {/*   {questions.length > 0 ? ( */}
-        <div>
+        {questions.length > 0 ? (
+          <div>
 
-          <p data-testid="question-text">{mock[index].question}</p>
-          <p data-testid="question-category">{mock[index].category}</p>
-          {mock[index].type === 'boolean' ? (
-            <section>
-              <button type="button">False</button>
-              <button type="button">True</button>
-            </section>
-          ) : (
-            <section>
-              <button type="button">4</button>
-              <button type="button">5</button>
-              <button type="button">6</button>
-              <button type="button">4</button>
-            </section>
-          )}
-        </div>
-        {/*     ) : (
+            <p data-testid="question-text">{questions[index].question}</p>
+            <p data-testid="question-category">{questions[index].category}</p>
+            {questions[index].type === 'boolean' ? (
+              <section data-testid="answer-options" id="section">
+                <button data-testid="wrong-answer-0" type="button">
+                  {questions[index].incorrect_answers[0]}
+                </button>
+                <button data-testid="correct-answer" type="button">
+                  {questions[index].correct_answer}
+                </button>
+              </section>
+            ) : (
+              <section data-testid="answer-options" id="section">
+                <button data-testid="wrong-answer-0" type="button">
+                  { questions[index].incorrect_answers[0]}
+                </button>
+                <button data-testid="wrong-answer-1" type="button">
+                  {questions[index].incorrect_answers[1]}
+                </button>
+                <button data-testid="wrong-answer-2" type="button">
+                  {questions[index].incorrect_answers[2]}
+                </button>
+                <button data-testid="correct-answer" type="button">
+                  { questions[index].correct_answer}
+                </button>
+              </section>
+            )}
+          </div>
+        ) : (
           <p>carregando</p>
-        )} */}
+        )}
       </>
     );
   }
@@ -87,4 +99,5 @@ const mapStateToProps = (state) => ({
   responseCode: state.token.responseCode,
   error: state.token.error,
 });
+
 export default connect(mapStateToProps)(Game);
