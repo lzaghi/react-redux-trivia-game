@@ -24,20 +24,25 @@ class Game extends Component {
 
   async componentDidMount() {
     const { token, history, responseCode } = this.props;
-    const RESPONSE_CODE = 3;
-    const NUMBER_QUESTIONS = 5;
-    if (responseCode === RESPONSE_CODE) {
+    const THREE = 3;
+    const FIVE = 5;
+
+    console.log(responseCode);
+
+    const URL = `https://opentdb.com/api.php?amount=${FIVE}&token=${token}`;
+    const request = await fetch(URL);
+    const response = await request.json();
+
+    console.log(response);
+
+    if (response.response_code === THREE) {
       localStorage.removeItem('token');
       history.push('/');
-    } else {
-      const URL = `https://opentdb.com/api.php?amount=${NUMBER_QUESTIONS}&token=${token}`;
-      const request = await fetch(URL);
-      const response = await request.json();
-
-      this.setState({
-        questions: response.results,
-      });
     }
+
+    this.setState({
+      questions: response.results,
+    });
   }
 
   componentDidUpdate() {
