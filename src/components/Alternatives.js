@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Alternatives extends Component {
   state = {
@@ -13,7 +14,7 @@ class Alternatives extends Component {
   };
 
   render() {
-    const { index, questions } = this.props;
+    const { index, questions, timer } = this.props;
     const { setStyle } = this.state;
     return (
       <div>
@@ -26,6 +27,7 @@ class Alternatives extends Component {
               type="button"
               onClick={ this.buttonsStyle }
               className={ `alt ${setStyle ? 'red' : ''}` }
+              disabled={ timer === 0 }
             >
               {questions[index].incorrect_answers[0]}
             </button>
@@ -34,6 +36,7 @@ class Alternatives extends Component {
               type="button"
               onClick={ this.buttonsStyle }
               className={ `alt ${setStyle ? 'green' : ''}` }
+              disabled={ timer === 0 }
             >
               {questions[index].correct_answer}
             </button>
@@ -45,6 +48,7 @@ class Alternatives extends Component {
               type="button"
               onClick={ (event) => this.buttonsStyle(event) }
               className={ `alt ${setStyle ? 'red' : ''}` }
+              disabled={ timer === 0 }
             >
               { questions[index].incorrect_answers[0]}
             </button>
@@ -53,6 +57,7 @@ class Alternatives extends Component {
               type="button"
               onClick={ this.buttonsStyle }
               className={ `alt ${setStyle ? 'red' : ''}` }
+              disabled={ timer === 0 }
             >
               {questions[index].incorrect_answers[1]}
             </button>
@@ -61,6 +66,7 @@ class Alternatives extends Component {
               type="button"
               onClick={ this.buttonsStyle }
               className={ `alt ${setStyle ? 'red' : ''}` }
+              disabled={ timer === 0 }
             >
               {questions[index].incorrect_answers[2]}
             </button>
@@ -69,6 +75,7 @@ class Alternatives extends Component {
               type="button"
               onClick={ this.buttonsStyle }
               className={ `alt ${setStyle ? 'green' : ''}` }
+              disabled={ timer === 0 }
             >
               { questions[index].correct_answer}
             </button>
@@ -79,9 +86,14 @@ class Alternatives extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  timer: state.player.timer,
+});
+
 Alternatives.propTypes = {
   index: PropTypes.number.isRequired,
-  questions: PropTypes.arrayOf().isRequired,
+  questions: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  timer: PropTypes.number.isRequired,
 };
 
-export default Alternatives;
+export default connect(mapStateToProps)(Alternatives);

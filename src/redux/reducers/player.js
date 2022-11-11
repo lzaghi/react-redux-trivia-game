@@ -1,10 +1,11 @@
-import { USER_LOGIN } from '../actions/index';
+import { TIMER_DOWN, USER_LOGIN } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
   assertions: 0,
   score: 0,
   gravatarEmail: '',
+  timer: 30,
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,11 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       gravatarEmail: action.gravatarEmail,
       name: action.name,
+    };
+  case TIMER_DOWN:
+    return {
+      ...state,
+      timer: action.timer,
     };
   default:
     return state;
