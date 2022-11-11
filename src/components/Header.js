@@ -6,31 +6,31 @@ import PropTypes from 'prop-types';
 class Header extends React.Component {
   render() {
     const {
-      email,
+      gravatarEmail,
       name,
       score,
     } = this.props;
-    const emailMd5 = md5(email).toString();
+    const emailMd5 = md5(gravatarEmail).toString();
     return (
       <>
-        <img src={ `https://www.gravatar.com/avatar/${emailMd5}` } alt="avatar" />
-        <div>{ name }</div>
-        <div>{ score }</div>
+        <img data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${emailMd5}` } alt="avatar" />
+        <div data-testid="header-player-name">{ name }</div>
+        <div data-testid="header-score">{ score }</div>
       </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  email: state.player.gravatarEmail,
+  gravatarEmail: state.player.gravatarEmail,
   name: state.player.name,
   score: state.player.score,
 });
 
 Header.propTypes = {
-  email: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
