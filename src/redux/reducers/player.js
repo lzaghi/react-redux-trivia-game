@@ -30,6 +30,7 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: action.score + state.score,
+      assertions: 1 + state.assertions,
     };
   case SHOW_NEXT:
     return {
