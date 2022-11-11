@@ -19,7 +19,7 @@ const player = (state = INITIAL_STATE, action) => {
   case TIMER_DOWN:
     return {
       ...state,
-      timer: action.timer,
+      timer: action.timer - 1,
     };
   default:
     return state;

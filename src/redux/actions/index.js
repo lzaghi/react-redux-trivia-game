@@ -34,7 +34,7 @@ export const fetchTokenAPI = () => (dispatch) => {
     .catch((error) => dispatch(fetchTokenFail(error)));
 };
 
-export const timerZero = (timer) => ({
+export const timerDown = (timer) => ({
   type: TIMER_DOWN,
   timer,
 });

@@ -1,37 +1,27 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { timerZero } from '../redux/actions';
+import { timerDown } from '../redux/actions';
 
 class Timer extends Component {
-  constructor(props) {
-    super(props);
-    const { timer } = this.props;
-    this.state = {
-      timer,
-    };
-  }
-
   componentDidMount() {
     const ONE_SECOND = 1000;
+    const { dispatch } = this.props;
     this.intervalID = setInterval(() => {
-      this.setState((prev) => ({
-        timer: prev.timer - 1,
-      }));
+      const { timer } = this.props;
+      dispatch(timerDown(timer));
     }, ONE_SECOND);
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    const { dispatch } = this.props;
-    const { timer } = this.state;
-    if (prevState.timer === 1) {
+  componentDidUpdate(prevProps) {
+    console.log(prevProps);
+    if (prevProps.timer - 1 === 0) {
       clearInterval(this.intervalID);
-      dispatch(timerZero(timer));
     }
   }
 
   render() {
-    const { timer } = this.state;
+    const { timer } = this.props;
     return (
       <p>{ timer }</p>
     );
