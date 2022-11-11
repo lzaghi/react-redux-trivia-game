@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Alternatives from '../components/Alternatives';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 import './game.css';
 
 class Game extends Component {
@@ -45,12 +46,14 @@ class Game extends Component {
     return (
       <>
         <Header />
-
         {questions.length > 0 ? (
-          <Alternatives
-            index={ index }
-            questions={ questions }
-          />
+          <>
+            <Timer />
+            <Alternatives
+              index={ index }
+              questions={ questions }
+            />
+          </>
         ) : (
           <p>Carregando...</p>
         )}

@@ -2,6 +2,7 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const FETCHING = 'FETCHING';
 export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS';
 export const FETCH_TOKEN_FAIL = 'FETCH_TOKEN_FAIL';
+export const TIMER_DOWN = 'TIMER_DOWN';
 
 export function userLogin(gravatarEmail, name) {
   return {
@@ -32,3 +33,8 @@ export const fetchTokenAPI = () => (dispatch) => {
     .then((json) => dispatch(fetchTokenSuccess(json)))
     .catch((error) => dispatch(fetchTokenFail(error)));
 };
+
+export const timerDown = (timer) => ({
+  type: TIMER_DOWN,
+  timer,
+});
