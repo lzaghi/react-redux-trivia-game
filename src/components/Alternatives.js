@@ -1,19 +1,23 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { increaseScore } from '../redux/actions';
+import { clickedAlt, increaseScore, showNext } from '../redux/actions';
 
 class Alternatives extends Component {
-  state = {
-    setStyle: false,
-    clicked: false,
-  };
+  // state = {
+  //   setStyle: false,
+  //   clicked: false,
+  // };
 
   buttonsStyle = (event) => {
-    this.setState({
-      setStyle: true,
-      clicked: true,
-    });
+    const { dispatch } = this.props;
+    dispatch(showNext());
+
+    dispatch(clickedAlt());
+    // this.setState({
+    //   setStyle: true,
+    //   clicked: true,
+    // });
 
     this.handleScore(event);
   };
@@ -40,8 +44,8 @@ class Alternatives extends Component {
   };
 
   render() {
-    const { index, questions, timer } = this.props;
-    const { setStyle, clicked } = this.state;
+    const { index, questions, timer, setStyle, clicked } = this.props;
+    // const { setStyle, clicked } = this.state;
     return (
       <div>
         <p data-testid="question-category">{questions[index].category}</p>
@@ -102,6 +106,8 @@ class Alternatives extends Component {
 const mapStateToProps = (state) => ({
   timer: state.player.timer,
   score: state.player.score,
+  setStyle: state.player.setStyle,
+  clicked: state.player.clicked,
 });
 
 Alternatives.propTypes = {
@@ -110,6 +116,8 @@ Alternatives.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   timer: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
+  clicked: PropTypes.bool.isRequired,
+  setStyle: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Alternatives);

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Alternatives from '../components/Alternatives';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
+import { hideNext, resetAlt } from '../redux/actions';
 import './game.css';
 
 class Game extends Component {
@@ -40,9 +41,25 @@ class Game extends Component {
     });
   }
 
+  handleClick = () => {
+    this.setState((prevState) => ({
+      index: prevState.index + 1,
+    }));
+
+    const { dispatch, history } = this.props;
+    dispatch(hideNext());
+    dispatch(resetAlt());
+
+    const FOUR = 4;
+    const { index } = this.state;
+    if (index === FOUR) history.push('/feedback');
+  };
+
   render() {
     const { index, questions } = this.state;
+    const { next } = this.props;
     console.log(questions);
+
     return (
       <>
         <Header />
@@ -53,6 +70,15 @@ class Game extends Component {
               index={ index }
               questions={ questions }
             />
+            { next && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ this.handleClick }
+              >
+                Next
+              </button>
+            )}
           </>
         ) : (
           <p>Carregando...</p>
@@ -67,10 +93,13 @@ Game.propTypes = {
     push: PropTypes.func,
   }).isRequired,
   token: PropTypes.string.isRequired,
+  next: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   isLoading: state.token.isLoading,
   token: state.token.token,
+  next: state.player.next,
 });
 
 export default connect(mapStateToProps)(Game);
