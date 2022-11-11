@@ -3,6 +3,7 @@ export const FETCHING = 'FETCHING';
 export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS';
 export const FETCH_TOKEN_FAIL = 'FETCH_TOKEN_FAIL';
 export const TIMER_DOWN = 'TIMER_DOWN';
+export const INCREASE_SCORE = 'INCREASE_SCORE';
 
 export function userLogin(gravatarEmail, name) {
   return {
@@ -37,4 +38,9 @@ export const fetchTokenAPI = () => (dispatch) => {
 export const timerDown = (timer) => ({
   type: TIMER_DOWN,
   timer,
+});
+
+export const increaseScore = (score) => ({
+  type: INCREASE_SCORE,
+  score,
 });

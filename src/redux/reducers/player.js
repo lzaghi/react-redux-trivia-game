@@ -1,4 +1,4 @@
-import { TIMER_DOWN, USER_LOGIN } from '../actions/index';
+import { TIMER_DOWN, USER_LOGIN, INCREASE_SCORE } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
@@ -20,6 +20,11 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       timer: action.timer - 1,
+    };
+  case INCREASE_SCORE:
+    return {
+      ...state,
+      score: action.score + state.score,
     };
   default:
     return state;
