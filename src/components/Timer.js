@@ -14,7 +14,7 @@ class Timer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps);
+    // console.log(prevProps);
     if (prevProps.timer - 1 === 0) {
       clearInterval(this.intervalID);
     }
