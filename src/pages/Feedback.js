@@ -5,7 +5,7 @@ import Header from '../components/Header';
 
 class Feedback extends React.Component {
   render() {
-    const { assertionsScore, score } = this.props;
+    const { assertionsScore, score, history } = this.props;
     const minimumScore = 3;
     return (
       <>
@@ -15,6 +15,13 @@ class Feedback extends React.Component {
         <p data-testid="feedback-text">
           { assertionsScore >= minimumScore ? 'Well Done!' : 'Could be better...' }
         </p>
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ () => history.push('/') }
+        >
+          Play Again
+        </button>
       </>
 
     );
@@ -29,5 +36,8 @@ const mapStateToProps = (state) => ({
 Feedback.propTypes = {
   assertionsScore: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 export default connect(mapStateToProps)(Feedback);
