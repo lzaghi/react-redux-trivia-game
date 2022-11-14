@@ -1,16 +1,20 @@
 import { TIMER_DOWN,
   USER_LOGIN,
-  INCREASE_SCORE, SHOW_NEXT, HIDE_NEXT, CLICKED_ALT, RESET_ALT } from '../actions/index';
+  INCREASE_SCORE,
+  SHOW_NEXT,
+  HIDE_NEXT, CLICKED_ALT, RESET_ALT, SAVE_PICTURE, RESET_GAME } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
   assertions: 0,
   score: 0,
   gravatarEmail: '',
+  picture: '',
   timer: 30,
   next: false,
   setStyle: false,
   clicked: false,
+  intervalID: '',
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -25,6 +29,7 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       timer: action.timer - 1,
+      intervalID: action.intervalID,
     };
   case INCREASE_SCORE:
     return {
@@ -55,8 +60,13 @@ const player = (state = INITIAL_STATE, action) => {
       setStyle: false,
       clicked: false,
     };
-  default:
-    return state;
+  case SAVE_PICTURE:
+    return {
+      ...state,
+      picture: action.picture,
+    };
+  case RESET_GAME: return { ...INITIAL_STATE };
+  default: return state;
   }
 };
 

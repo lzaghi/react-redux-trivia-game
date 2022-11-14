@@ -8,6 +8,8 @@ export const SHOW_NEXT = 'SHOW_NEXT';
 export const HIDE_NEXT = 'HIDE_NEXT';
 export const CLICKED_ALT = 'CLICKED_ALT';
 export const RESET_ALT = 'RESET_ALT';
+export const SAVE_PICTURE = 'SAVE_PICTURE';
+export const RESET_GAME = 'RESET_GAME';
 
 export function userLogin(gravatarEmail, name) {
   return {
@@ -63,4 +65,13 @@ export const clickedAlt = () => ({
 
 export const resetAlt = () => ({
   type: RESET_ALT,
+});
+
+export const savePicture = (picture) => ({
+  type: SAVE_PICTURE,
+  picture,
+});
+
+export const resetGame = () => ({
+  type: RESET_GAME,
 });
