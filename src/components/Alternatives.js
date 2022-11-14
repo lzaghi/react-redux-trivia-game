@@ -4,20 +4,11 @@ import { connect } from 'react-redux';
 import { clickedAlt, increaseScore, showNext } from '../redux/actions';
 
 class Alternatives extends Component {
-  // state = {
-  //   setStyle: false,
-  //   clicked: false,
-  // };
-
   buttonsStyle = (event) => {
     const { dispatch } = this.props;
     dispatch(showNext());
 
     dispatch(clickedAlt());
-    // this.setState({
-    //   setStyle: true,
-    //   clicked: true,
-    // });
 
     this.handleScore(event);
   };
@@ -30,7 +21,6 @@ class Alternatives extends Component {
     console.log(event.target);
     let dif = 1;
 
-    // const right = document.getElementById('right');
     if (event.target.id === 'right') {
       if (difficulty === 'medium') dif = 2;
       if (difficulty === 'hard') dif = THREE;
@@ -45,7 +35,7 @@ class Alternatives extends Component {
 
   render() {
     const { index, questions, timer, setStyle, clicked } = this.props;
-    // const { setStyle, clicked } = this.state;
+
     return (
       <div>
         <p data-testid="question-category">{questions[index].category}</p>

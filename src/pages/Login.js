@@ -15,14 +15,6 @@ class Login extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    const { token, history } = this.props;
-    if (token !== '') {
-      localStorage.setItem('token', token);
-      history.push('/game');
-    }
-  }
-
   handleInput(event) {
     const { name, value } = event.target;
     this.setState({
@@ -30,11 +22,21 @@ class Login extends React.Component {
     });
   }
 
-  handleClick = () => {
+  redirectGame = () => {
+    const { token, history } = this.props;
+    // if (token !== '') {
+    localStorage.setItem('token', token);
+    history.push('/game');
+    // }
+  };
+
+  handleClick = async () => {
     const { dispatch } = this.props;
     const { email, name } = this.state;
     dispatch(userLogin(email, name));
-    dispatch(fetchTokenAPI());
+    await dispatch(fetchTokenAPI());
+
+    this.redirectGame();
   };
 
   validateInputs() {

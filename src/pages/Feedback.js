@@ -2,8 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { resetGame } from '../redux/actions';
 
 class Feedback extends React.Component {
+  handleReset = () => {
+    const { history, dispatch } = this.props;
+    history.push('/');
+    dispatch(resetGame());
+  };
+
   render() {
     const { assertionsScore, score, history } = this.props;
     const minimumScore = 3;
@@ -18,7 +25,7 @@ class Feedback extends React.Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={ () => history.push('/') }
+          onClick={ this.handleReset }
         >
           Play Again
         </button>
@@ -43,6 +50,7 @@ const mapStateToProps = (state) => ({
 Feedback.propTypes = {
   assertionsScore: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

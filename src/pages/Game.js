@@ -41,18 +41,42 @@ class Game extends Component {
     });
   }
 
+  handleLocal = () => {
+    const { name, score, picture } = this.props;
+    console.log(localStorage.getItem('ranking'));
+    if (localStorage.getItem('ranking') === null) {
+      localStorage.setItem('ranking', JSON.stringify([]));
+    }
+
+    const arrayLocal = [
+      ...JSON.parse(localStorage.getItem('ranking')),
+      {
+        name,
+        score,
+        picture,
+      },
+    ];
+
+    const arrayOrdenado = arrayLocal.sort((a, b) => b.score - a.score);
+
+    localStorage.setItem('ranking', JSON.stringify(arrayOrdenado));
+  };
+
   handleClick = () => {
+    const { dispatch, history } = this.props;
+    const FOUR = 4;
+    const { index } = this.state;
+    if (index === FOUR) {
+      this.handleLocal();
+      history.push('/feedback');
+    }
+
     this.setState((prevState) => ({
       index: prevState.index + 1,
     }));
 
-    const { dispatch, history } = this.props;
     dispatch(hideNext());
     dispatch(resetAlt());
-
-    const FOUR = 4;
-    const { index } = this.state;
-    if (index === FOUR) history.push('/feedback');
   };
 
   render() {
@@ -95,11 +119,17 @@ Game.propTypes = {
   token: PropTypes.string.isRequired,
   next: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  picture: PropTypes.string.isRequired,
 };
 const mapStateToProps = (state) => ({
   isLoading: state.token.isLoading,
   token: state.token.token,
   next: state.player.next,
+  name: state.player.name,
+  score: state.player.score,
+  picture: state.player.picture,
 });
 
 export default connect(mapStateToProps)(Game);
