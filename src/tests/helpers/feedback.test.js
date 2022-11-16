@@ -16,7 +16,7 @@ describe('Página de feedback', ()=>{
 
     test('2- Verifica se ao clicar no botão de Play Again, a página é redirecionado para o início', ()=>{
         const { history } = renderWithRouterAndRedux(<App />);
-        act(()=> {history.push('/feedback');})
+        act(()=> {history.push('/feedback')});
         const buttonPlayAgain = screen.getByRole('button', {name : /Play Again/i});
         userEvent.click(buttonPlayAgain);
         const { location : { pathname }} = history;
@@ -25,11 +25,10 @@ describe('Página de feedback', ()=>{
 
     test('3- Verifica se ao clicar no botão de Ranking, a página é redirecionada para a de ranking',()=>{
         const { history } = renderWithRouterAndRedux(<App />);
-        act(()=>{history.push('/feedback');})
+        act(()=>{history.push('/feedback')});
         const buttonRnk = screen.getByRole('button', { name : /Ranking/i});
         userEvent.click(buttonRnk);
         const { location : { pathname}} = history;
         expect(pathname).toBe('/ranking');
-
     });
 })

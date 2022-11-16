@@ -17,7 +17,8 @@ class Ranking extends Component {
         {console.log(JSON.parse(localStorage.getItem('ranking')))}
         <section id="section">
           {
-            JSON.parse(localStorage.getItem('ranking'))
+            JSON.parse(localStorage.getItem('ranking')) !== null
+            && JSON.parse(localStorage.getItem('ranking'))
               .map((pessoa, index) => (
                 <div key={ index }>
                   <p data-testid={ `player-score-${index}` }>{pessoa.score}</p>
