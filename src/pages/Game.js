@@ -22,7 +22,7 @@ class Game extends Component {
     const request = await fetch(URL);
     const response = await request.json();
 
-    if (response.response_code === THREE) {
+    if (response.response_code === THREE || token === '') {
       localStorage.removeItem('token');
       history.push('/');
     }
@@ -32,11 +32,8 @@ class Game extends Component {
     }, () => {
       const section = document.getElementById('section');
 
-      if (section) {
-        console.log('entrou');
-        for (let i = section.children.length; i >= 0; i -= 1) {
-          section.appendChild(section.children[Math.floor(Math.random() * i)]);
-        }
+      for (let i = section.children.length; i >= 0; i -= 1) {
+        section.appendChild(section.children[Math.floor(Math.random() * i)]);
       }
     });
   }
@@ -44,12 +41,9 @@ class Game extends Component {
   handleLocal = () => {
     const { name, score, picture } = this.props;
     console.log(localStorage.getItem('ranking'));
-    if (localStorage.getItem('ranking') === null) {
-      localStorage.setItem('ranking', JSON.stringify([]));
-    }
 
     const arrayLocal = [
-      ...JSON.parse(localStorage.getItem('ranking')),
+      ...JSON.parse(localStorage.getItem('ranking')) || [],
       {
         name,
         score,
@@ -87,7 +81,7 @@ class Game extends Component {
     return (
       <>
         <Header />
-        {questions.length > 0 ? (
+        {questions?.length > 0 ? (
           <>
             <Timer />
             <Alternatives

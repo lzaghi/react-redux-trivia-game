@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouterAndRedux from './renderWithRouterAndRedux';
-import App from '../../App';
-import Feedback from '../../pages/Feedback';
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
+import App from '../App';
+import Feedback from '../pages/Feedback';
 
 describe('Página de feedback', ()=>{
     test('1- Verifica se os botões de Play Again e Ranking estão presentes na paǵina', ()=>{
