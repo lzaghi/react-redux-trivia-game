@@ -1,10 +1,11 @@
 import React from 'react';
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
 import App from "../App";
 
 describe('Testa a tela de Login', () => {
+  jest.setTimeout(30000);
   it('Verifica se estamos na tela de Login', () => {
     const { history: { location } } = renderWithRouterAndRedux(<App />);
     expect(location.pathname).toBe('/');
@@ -40,8 +41,11 @@ describe('Testa a tela de Login', () => {
     userEvent.type(name, 'Test');
     userEvent.type(email, 'email@test.com');
     userEvent.click(jogar);
-    const tempo = 3000;
-    await new Promise((carregando) => setTimeout(carregando, tempo));
+    await new Promise((response) => {
+        setTimeout(() => {
+            response();
+        }, 5000);
+    });
     expect(history.location.pathname).toBe('/game');
   });
   it('Verifica se o botão "Settings" está na tela', () => {
@@ -55,5 +59,11 @@ describe('Testa a tela de Login', () => {
     expect(history.location.pathname).toBe('/');
     userEvent.click(settings);
     expect(history.location.pathname).toBe('/settings');
+  });
+
+    it('testa se imprime "Algo deu errado" quando erro é lançado', async () => {
+    renderWithRouterAndRedux(<App />, { token: { error: true }});
+
+    expect(screen.getByText('Algo deu errado!')).toBeInTheDocument();
   });
 })

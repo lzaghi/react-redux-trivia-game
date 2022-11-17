@@ -22,7 +22,7 @@ class Timer extends Component {
   render() {
     const { timer } = this.props;
     return (
-      <p>{ timer }</p>
+      <p data-testid="timer">{ timer }</p>
     );
   }
 }
