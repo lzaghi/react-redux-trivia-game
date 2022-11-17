@@ -41,8 +41,11 @@ describe('Testa a tela de Login', () => {
     userEvent.type(name, 'Test');
     userEvent.type(email, 'email@test.com');
     userEvent.click(jogar);
-    const tempo = 3000;
-    await new Promise((carregando) => setTimeout(carregando, tempo));
+    await new Promise((response) => {
+        setTimeout(() => {
+            response();
+        }, 5000);
+    });
     expect(history.location.pathname).toBe('/game');
   });
   it('Verifica se o botão "Settings" está na tela', () => {
